@@ -1,3 +1,3 @@
-import { Home } from '@app/components/templates/Home'
+import Home from '@app/components/templates/Home'
 
 export default Home

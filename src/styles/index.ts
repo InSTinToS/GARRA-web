@@ -53,6 +53,7 @@ export const globalStyles = globalCss({
 
     ...reset.button,
     ...reset.inputText,
-    ...reset.inputColor
+    ...reset.inputColor,
+    ...reset.inputPassword
   }
 })

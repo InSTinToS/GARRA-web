@@ -1,14 +1,16 @@
 import { ArrowButton, Button, Field, Forgot, Form, Logo, Style } from './styles'
 
 import { Link } from '@app/components/atoms/Link'
-import { Arrow } from '@app/components/atoms/icons/Arrow'
+import Arrow from '@app/components/atoms/icons/Arrow'
 
 import { TButtonProps } from '@app/types/react.types'
 
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-export const Home = () => {
+const Home = () => {
+  const router = useRouter()
   const [showSignUp, setShowSignUp] = useState(false)
 
   const toggleSignUp: TButtonProps['onClick'] = e => {
@@ -52,7 +54,15 @@ export const Home = () => {
 
               <Field type='text' placeholder='Senha' />
 
-              <Button type='submit'>ENTRAR</Button>
+              <Button
+                type='submit'
+                onClick={e => {
+                  e.preventDefault()
+                  router.push('/requests')
+                }}
+              >
+                ENTRAR
+              </Button>
 
               <Button type='button' onClick={toggleSignUp}>
                 CADASTRAR
@@ -69,3 +79,5 @@ export const Home = () => {
     </>
   )
 }
+
+export default Home

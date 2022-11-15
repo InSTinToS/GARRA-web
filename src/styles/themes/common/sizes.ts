@@ -49,6 +49,7 @@ export const sizes = {
   72: pxToRem(288),
   80: pxToRem(320),
   96: pxToRem(384),
+  105: pxToRem(420),
   116: pxToRem(466),
   137: pxToRem(550),
   212: pxToRem(850)

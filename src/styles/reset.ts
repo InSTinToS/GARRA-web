@@ -1,4 +1,11 @@
 export const reset = {
+  inputPassword: {
+    'input[type="password"]': {
+      border: 'none',
+      outline: 'none',
+      backgroundColor: 'transparent'
+    }
+  },
   inputText: {
     'input[type="text"]': {
       border: 'none',
