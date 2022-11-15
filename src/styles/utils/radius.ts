@@ -1,25 +1,25 @@
 export const radius = {
   radius: (value: string | number) => ({ borderRadius: value }),
 
-  radiusLB: (value: string | number) => ({ borderLeftBottomRadius: value }),
-  radiusLT: (value: string | number) => ({ borderLeftTopRadius: value }),
-  radiusRT: (value: string | number) => ({ borderRightTopRadius: value }),
+  radiusLB: (value: string | number) => ({ borderBottomLeftRadius: value }),
+  radiusLT: (value: string | number) => ({ borderTopLeftRadius: value }),
+  radiusRT: (value: string | number) => ({ borderTopRightRadius: value }),
   radiusBT: (value: string | number) => ({ borderBottomTopRadius: value }),
 
   radiusL: (value: string | number) => ({
-    borderLeftTopRadius: value,
-    borderLeftBottomRadius: value
+    borderTopLeftRadius: value,
+    borderBottomLeftRadius: value
   }),
   radiusT: (value: string | number) => ({
-    borderLeftTopRadius: value,
-    borderRightTopRadius: value
+    borderTopLeftRadius: value,
+    borderTopRightRadius: value
   }),
   radiusR: (value: string | number) => ({
-    borderRightTopRadius: value,
-    borderRightBottomRadius: value
+    borderTopRightRadius: value,
+    borderBottomRightRadius: value
   }),
   radiusB: (value: string | number) => ({
-    borderRightBottomRadius: value,
-    borderLeftBottomRadius: value
+    borderBottomRightRadius: value,
+    borderBottomLeftRadius: value
   })
 }

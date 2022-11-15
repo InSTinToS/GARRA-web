@@ -1,5 +1,7 @@
 import { styled } from '@app/styles'
 
+import OriginalButton from '@app/components/atoms/Button'
+
 export const ArrowButton = styled('button', {
   flexCenter: 'row',
   position: 'absolute',
@@ -31,23 +33,15 @@ export const Forgot = styled('p', {
   }
 })
 
-export const Button = styled('button', {
+export const Button = styled(OriginalButton, {
   py: '$4',
-
-  radius: '$4',
-  width: '100%',
   maxWidth: '$96',
 
   fontWeight: 'bold',
 
-  color: '$white',
-  bg: '$secondary',
+  bg: '$secondary ',
 
-  '& + button': { mt: '$2', mb: '$6', bg: '$primary' },
-
-  '@sm': {
-    fontSize: '$4'
-  }
+  '& + button': { mt: '$2', mb: '$6', bg: '$primary' }
 })
 
 export const Field = styled('input', {
