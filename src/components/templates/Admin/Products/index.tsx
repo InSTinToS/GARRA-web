@@ -9,6 +9,33 @@ import { useRouter } from 'next/router'
 const Products = () => {
   const router = useRouter()
 
+  const items = [
+    {
+      header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
+      content: (
+        <Info
+          key='Monitor HP Full HD (5)'
+          data={{
+            place: 'Almoxarifado',
+            sector: 'Segundo Andar',
+            name: 'Monitor HP Full HD (5)',
+            barCodes: [
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041',
+              '1231241240192041'
+            ]
+          }}
+        />
+      )
+    }
+  ]
+
   return (
     <Style>
       <Section>
@@ -18,299 +45,7 @@ const Products = () => {
           <input type='text' placeholder='Pesquisar produtos' />
         </Search>
 
-        <List
-          variant='secondary'
-          items={[
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            },
-            {
-              header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-              content: (
-                <Info
-                  key='Monitor HP Full HD (5)'
-                  data={{
-                    place: 'Almoxarifado',
-                    sector: 'Segundo Andar',
-                    name: 'Monitor HP Full HD (5)',
-                    barCodes: [
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041',
-                      '1231241240192041'
-                    ]
-                  }}
-                />
-              )
-            }
-          ]}
-        />
+        <List variant='secondary' items={items} />
 
         <Button
           type='button'

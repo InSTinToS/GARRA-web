@@ -1,4 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+/* eslint-disable @typescript-eslint/no-extra-semi */
 import { Header, Radio, Style } from './styles'
+
+import { Close } from './CreateRequest/styles'
 
 import Button from '@app/components/atoms/Button'
 
@@ -9,13 +14,70 @@ import List from '@app/components/organisms/List'
 
 import { CreateRequest } from '@app/components/templates/Requests/CreateRequest'
 
+import { useAppSelector } from '@app/hooks/useAppSelector'
+
+import { api } from '@app/services/api'
+
 import { TNextPageWithLayout } from '@app/types/next.types'
 
+import { formatDate } from '@app/utils/date/format'
+
 import Head from 'next/head'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const Requests: TNextPageWithLayout = () => {
   const ref = useRef<IForwardModal>(null)
+  const [requests, setRequests] = useState<any[]>([])
+  const user = useAppSelector(({ userStore }) => userStore.user)
+
+  const items = requests.map(req => ({
+    customHeader: (
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          color: 'white',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        {formatDate(req.created_at)}
+
+        <button
+          type='button'
+          style={{ padding: 0, width: 'auto' }}
+          onClick={async () => {
+            if (user?.token) {
+              await api.delete(`/requests/${req.id}`, {
+                headers: { Authorization: `Bearer ${user.token}` }
+              })
+
+              setRequests(prev => prev.filter(prev => prev.id !== req.id))
+            }
+          }}
+        >
+          <Close css={{ path: { fill: '$tertiary' } }} />
+        </button>
+      </div>
+    ),
+
+    content: <p key='1'>{req.description}</p>
+  }))
+
+  const getRequests = async () => {
+    if (user) {
+      const res = await api.get('/requests', {
+        params: { user_id: user.id },
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+
+      setRequests(res.data.requests.reverse())
+    }
+  }
+
+  useEffect(() => {
+    getRequests()
+  }, [])
 
   return (
     <>
@@ -27,6 +89,7 @@ const Requests: TNextPageWithLayout = () => {
         <CreateRequest
           onCloseClick={() => {
             ref.current?.triggerModal({ open: false })
+            getRequests()
           }}
         />
       </Modal>
@@ -56,118 +119,7 @@ const Requests: TNextPageWithLayout = () => {
         </Header>
 
         <section>
-          <List
-            items={[
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              }
-            ]}
-          />
+          <List items={items} />
         </section>
       </Style>
     </>

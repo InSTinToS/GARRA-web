@@ -2,6 +2,7 @@ export interface IUserStore {
   error?: string
   loading?: boolean
   user?: {
+    id: string
     email: string
     token?: string
     avatar?: string
