@@ -1,6 +1,11 @@
 import { styled } from '@app/styles'
 
 import OriginalButton from '@app/components/atoms/Button'
+import { Switch as OriginalSwitch } from '@app/components/atoms/Switch'
+
+export const Switch = styled(OriginalSwitch, {
+  mb: '$4'
+})
 
 export const ArrowButton = styled('button', {
   flexCenter: 'row',
@@ -45,7 +50,7 @@ export const Button = styled(OriginalButton, {
 })
 
 export const Field = styled('input', {
-  '&[type="text"]': {
+  '&[type="text"], &[type="password"] ': {
     pl: '$4',
     mb: '$4',
     radius: '$4',

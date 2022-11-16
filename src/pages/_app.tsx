@@ -14,10 +14,8 @@ const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
     }
   }, [])
 
-  return getLayout(
-    <GlobalProvider>
-      <Component {...pageProps} />
-    </GlobalProvider>
+  return (
+    <GlobalProvider>{getLayout(<Component {...pageProps} />)}</GlobalProvider>
   )
 }
 
