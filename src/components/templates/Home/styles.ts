@@ -3,6 +3,18 @@ import { styled } from '@app/styles'
 import OriginalButton from '@app/components/atoms/Button'
 import { Switch as OriginalSwitch } from '@app/components/atoms/Switch'
 
+export const Error = styled('div', {
+  width: '100%',
+  maxWidth: '$xs',
+  p: '$4',
+  mb: '$4',
+  radius: '$4',
+  textAlign: 'center',
+
+  bg: '$error',
+  color: '$tertiary'
+})
+
 export const Switch = styled(OriginalSwitch, {
   mb: '$4'
 })
@@ -11,8 +23,8 @@ export const ArrowButton = styled('button', {
   flexCenter: 'row',
   position: 'absolute',
 
-  top: '$13',
-  left: '$13',
+  top: '$6',
+  left: '$6',
 
   svg: {
     height: '$6',
@@ -55,6 +67,7 @@ export const Field = styled('input', {
     mb: '$4',
     radius: '$4',
     height: '$12',
+    minHeight: '$12',
     width: '100%',
     maxWidth: '$96',
 
@@ -71,14 +84,25 @@ export const Field = styled('input', {
 export const Form = styled('form', {
   position: 'relative',
 
-  flexCenter: 'col',
-
-  px: '$4',
-  size: '100%',
-  radius: '$6',
-
   bg: '$tertiary',
+  pt: '$8',
+  pb: '$4',
+
   boxShadow: '8px 8px 32px 0px rgba(0,0,0,0.2)',
+
+  '.content': {
+    width: '100%',
+    flexCenter: 'col',
+    justifyContent: 'flex-start',
+
+    overflowY: 'auto'
+  },
+
+  flexCenter: 'col',
+  radius: '$6',
+  px: '$4',
+
+  size: '100%',
 
   '@sm': { px: '$8' },
 
@@ -88,7 +112,7 @@ export const Form = styled('form', {
 export const Style = styled('main', {
   flexCenter: 'row',
 
-  py: '$4',
+  py: '$2',
   px: '$2',
 
   height: '100vh',

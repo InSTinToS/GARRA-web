@@ -4,6 +4,7 @@
 import {
   ArrowButton,
   Button,
+  Error,
   Field,
   Forgot,
   Form,
@@ -11,6 +12,8 @@ import {
   Style,
   Switch
 } from './styles'
+
+import { signInYupSchema, signUpYupSchema } from './schemas'
 
 import { Link } from '@app/components/atoms/Link'
 import Arrow from '@app/components/atoms/icons/Arrow'
@@ -29,6 +32,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+const Err = ({ error }: any) => (error ? <Error>{error}</Error> : <></>)
+
 const Home = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -41,8 +46,12 @@ const Home = () => {
       full_name: '',
       email: '',
       password: '',
-      register: ''
+      register: '',
+      confirmPassword: ''
     },
+    validateOnBlur: true,
+    validateOnChange: false,
+    validationSchema: signUpYupSchema,
     onSubmit: async data => {
       try {
         const res = await api.post('/users', {
@@ -70,6 +79,7 @@ const Home = () => {
       email: '',
       password: ''
     },
+    validationSchema: signInYupSchema,
     onSubmit: async data => {
       try {
         const res: any = await dispatch(signInThunk(data))
@@ -125,51 +135,80 @@ const Home = () => {
 
           {showSignUp ? (
             <>
-              <Field
-                type='text'
-                name='full_name'
-                placeholder='Nome completo'
-                onChange={signUpFormik.handleChange}
-                value={signUpFormik.values.full_name}
-              />
+              <div className='content'>
+                <Err
+                  error={
+                    (signUpFormik.touched.full_name &&
+                      signUpFormik?.errors.full_name) ||
+                    (signUpFormik.touched.email &&
+                      signUpFormik?.errors.email) ||
+                    (signUpFormik.touched.password &&
+                      signUpFormik?.errors.password) ||
+                    (signUpFormik.touched.confirmPassword &&
+                      signUpFormik?.errors.confirmPassword) ||
+                    (signUpFormik.touched.register &&
+                      signUpFormik?.errors.register)
+                  }
+                />
 
-              <Field
-                type='text'
-                name='email'
-                placeholder='E-mail'
-                value={signUpFormik.values.email}
-                onChange={signUpFormik.handleChange}
-              />
-
-              <Field
-                type='password'
-                placeholder='Senha'
-                name='password'
-                value={signUpFormik.values.password}
-                onChange={signUpFormik.handleChange}
-              />
-
-              <Field type='password' placeholder='Confirmar senha' />
-
-              <Switch
-                name='admin'
-                formik={signUpFormik}
-                label='Sou administrador'
-                onClick={() => setIsAdmin(prev => !prev)}
-              />
-
-              {isAdmin && (
                 <Field
                   type='text'
-                  name='register'
-                  placeholder='Registro'
+                  name='full_name'
+                  placeholder='Nome completo'
+                  onBlur={signUpFormik.handleBlur}
                   onChange={signUpFormik.handleChange}
-                  value={signUpFormik.values.register}
+                  value={signUpFormik.values.full_name}
                 />
-              )}
+
+                <Field
+                  type='text'
+                  name='email'
+                  placeholder='E-mail'
+                  onBlur={signUpFormik.handleBlur}
+                  value={signUpFormik.values.email}
+                  onChange={signUpFormik.handleChange}
+                />
+
+                <Field
+                  type='password'
+                  placeholder='Senha'
+                  name='password'
+                  onBlur={signUpFormik.handleBlur}
+                  value={signUpFormik.values.password}
+                  onChange={signUpFormik.handleChange}
+                />
+
+                <Field
+                  type='password'
+                  name='confirmPassword'
+                  placeholder='Confirmar senha'
+                  onBlur={signUpFormik.handleBlur}
+                  onChange={signUpFormik.handleChange}
+                  value={signUpFormik.values.confirmPassword}
+                />
+
+                <Switch
+                  name='admin'
+                  formik={signUpFormik}
+                  label='Sou administrador'
+                  onClick={() => setIsAdmin(prev => !prev)}
+                />
+
+                {isAdmin && (
+                  <Field
+                    type='text'
+                    name='register'
+                    placeholder='Registro'
+                    onBlur={signUpFormik.handleBlur}
+                    onChange={signUpFormik.handleChange}
+                    value={signUpFormik.values.register}
+                  />
+                )}
+              </div>
 
               <Button
                 type='submit'
+                css={{ mt: '$4' }}
                 onClick={e => {
                   e.preventDefault()
                   signUpFormik.handleSubmit(e as any)
@@ -180,11 +219,20 @@ const Home = () => {
             </>
           ) : (
             <>
+              <Err
+                error={
+                  (signInFormik.touched.email && signInFormik?.errors.email) ||
+                  (signInFormik.touched.password &&
+                    signInFormik?.errors.password)
+                }
+              />
+
               <Field
                 type='text'
                 name='email'
                 placeholder='E-mail'
                 value={signInFormik.values.email}
+                onBlur={signInFormik.handleBlur}
                 onChange={signInFormik.handleChange}
               />
 
@@ -193,6 +241,7 @@ const Home = () => {
                 name='password'
                 placeholder='Senha'
                 value={signInFormik.values.password}
+                onBlur={signInFormik.handleBlur}
                 onChange={signInFormik.handleChange}
               />
 
