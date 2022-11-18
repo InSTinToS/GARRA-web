@@ -34,12 +34,14 @@ const CreateProduct: TNextPageWithLayout = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const router = useRouter()
 
-  const [video, setVideo] = useState<any>()
-
   const getVideo = async () => {
     if (!videoRef.current?.srcObject) {
       const media = await navigator.mediaDevices.getUserMedia({
-        video: { width: 1920, height: 1080 }
+        video: {
+          facingMode: { ideal: 'environment' },
+          width: 1920,
+          height: 1080
+        }
       })
 
       if (videoRef.current) videoRef.current.srcObject = media
@@ -132,7 +134,10 @@ const CreateProduct: TNextPageWithLayout = () => {
               </button>
             </BarCodeField>
 
-            {showBarcode && <Video ref={videoRef} />}
+            <Video
+              ref={videoRef}
+              css={{ display: showBarcode ? 'block' : 'none' }}
+            />
 
             <Button
               onClick={e => {
