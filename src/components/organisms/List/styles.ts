@@ -1,12 +1,13 @@
 import { styled } from '@app/styles'
 
 export const Style = styled('ul', {
-  pr: '$10',
+  width: '100%',
+  pr: '$4',
 
-  maxHeight: '70vh',
   overflowY: 'scroll',
+  maxWidth: '$xl',
 
   '> li + li': {
-    mt: '$6'
+    mt: '$4'
   }
 })

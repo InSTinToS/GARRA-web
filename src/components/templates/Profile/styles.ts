@@ -1,6 +1,9 @@
 import { styled, theme } from '@app/styles'
 
+import Button from '@app/components/atoms/Button'
 import DefaultAvatarIcon from '@app/components/atoms/icons/DefaultAvatar'
+
+export const Submit = styled(Button, { mb: '$8', '@md': { mb: 0 } })
 
 export const DefaultAvatar = styled(DefaultAvatarIcon, {
   fill: '$primary',
@@ -8,7 +11,13 @@ export const DefaultAvatar = styled(DefaultAvatarIcon, {
 })
 
 export const Logo = styled('img', {
-  height: '$24'
+  height: '$24',
+
+  display: 'none',
+
+  '@md': {
+    display: 'block'
+  }
 })
 
 export const Input = styled('input', {
@@ -18,14 +27,13 @@ export const Input = styled('input', {
   height: '$10',
   fontSize: '$4',
 
-  color: '$tertiary',
-
-  "&[type='password'], &[type='text']": {}
+  color: '$tertiary'
 })
 
 export const Label = styled('label', {
   flexCenter: 'row',
   width: '100%',
+  justifyContent: 'flex-start',
 
   fontWeight: '$6',
   fontSize: '$4',
@@ -34,6 +42,10 @@ export const Label = styled('label', {
 
   '& + label': {
     mt: '$4'
+  },
+
+  '@md': {
+    textAlign: 'center'
   }
 })
 
@@ -44,11 +56,15 @@ export const Form = styled('form', {
   alignItems: 'flex-start',
 
   px: '$8',
-  py: '$20',
-  radiusR: '$6',
-  height: '100%',
+  py: '$10',
+  width: '100vw',
 
-  bg: '$primary'
+  bg: '$primary',
+
+  '@md': {
+    width: 'auto',
+    py: '$20'
+  }
 })
 
 export const Avatar = styled('button', {})
@@ -57,24 +73,35 @@ export const Header = styled('header', {
   flexCenter: 'col',
 
   px: '$8',
-  py: '$20',
-  radiusL: '$6',
-  height: '100%',
+  py: '$10',
 
-  bg: '$tertiary'
+  width: '100vw',
+
+  bg: '$tertiary',
+
+  '@md': {
+    width: 'auto',
+    height: '100%'
+  }
 })
 
 export const Card = styled('section', {
-  flexCenter: 'row',
+  flexCenter: 'col',
 
-  mb: '$10'
+  m: '$10',
+
+  '@md': {
+    mt: 0,
+    width: 'auto',
+    flexCenter: 'row',
+    boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.4)'
+  }
 })
 
 export const Style = styled('main', {
   flexCenter: 'col',
 
-  px: '$10',
-  height: `calc(100vh - ${theme.sizes[28].value})`,
+  minHeight: `calc(100vh - ${theme.sizes[28].value})`,
 
-  bg: '$secondary'
+  '@md': { p: '$10' }
 })

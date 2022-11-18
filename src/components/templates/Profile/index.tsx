@@ -8,16 +8,19 @@ import {
   Input,
   Label,
   Logo,
-  Style
+  Style,
+  Submit
 } from './styles'
 
-import Button from '@app/components/atoms/Button'
+import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { TNextPageWithLayout } from '@app/types/next.types'
 
 import Head from 'next/head'
 
 const Profile: TNextPageWithLayout = () => {
+  const user = useAppSelector(({ userStore }) => userStore.user)
+
   return (
     <>
       <Head>
@@ -37,13 +40,20 @@ const Profile: TNextPageWithLayout = () => {
           <Form>
             <Label htmlFor=''>
               Nome:
-              <Input type='text' defaultValue='Rafael Cardoso Lima' />
+              <Input type='text' defaultValue={user?.full_name} />
             </Label>
 
             <Label htmlFor=''>
               Email:
-              <Input type='text' defaultValue='rafaelcardosolima@gmail.com' />
+              <Input type='text' defaultValue={user?.email} />
             </Label>
+
+            {user?.register && (
+              <Label htmlFor=''>
+                Registro:
+                <Input type='text' defaultValue={user?.register} />
+              </Label>
+            )}
 
             <Label htmlFor=''>
               Senha:
@@ -57,7 +67,7 @@ const Profile: TNextPageWithLayout = () => {
           </Form>
         </Card>
 
-        <Button>Salvar alterações</Button>
+        <Submit>Salvar alterações</Submit>
       </Style>
     </>
   )

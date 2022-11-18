@@ -20,13 +20,23 @@ export const Content = styled('div', {
   justifyContent: 'space-between',
 
   size: '100%',
-  maxWidth: '$xl'
+  maxWidth: '$xl',
+
+  img: {
+    width: '$40'
+  },
+
+  '@md': {
+    img: {
+      width: '$52'
+    }
+  }
 })
 
 export const Style = styled('nav', {
   flexCenter: 'row',
 
-  px: '$10',
+  px: '$4',
   height: '$28',
   width: '100vw',
 

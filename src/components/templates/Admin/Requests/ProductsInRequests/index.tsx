@@ -9,48 +9,65 @@ import {
   Style
 } from './styles'
 
-import { useState } from 'react'
+import { AdminContext } from '../..'
+
+import { useAppSelector } from '@app/hooks/useAppSelector'
+
+import { api } from '@app/services/api'
+
+import { IProduct } from '@app/alltypes'
+import { useContext, useState } from 'react'
 
 export interface IProductProps {
-  data: {
-    name: string
-    sector: string
-    place: string
-    barcodes: string[]
-  }
+  user: any
+  data: IProduct
+  requestId: string
+  onRelationClick: (product_id: string) => void
 }
-const Product = ({ data }: IProductProps) => (
+
+const Product = ({ data, onRelationClick }: IProductProps) => (
   <ProductStyle>
     <ProductData>
-      {data.name}
+      {data.name} ({data.quantity})
       <br />
-      {data.place}, {data.sector}
-      <br />
-      {data.barcodes[0]}
-      <br />
+      {/* 
+        {
+          data.place && data.sector ? (
+            <>
+              {data.place}, {data.sector}
+              <br />
+            </>
+          ) : (
+            ''
+        )} 
+        */}
     </ProductData>
 
-    <button type='button'>Relacionar</button>
+    <button type='button' onClick={() => onRelationClick(data.id)}>
+      Relacionar
+    </button>
   </ProductStyle>
 )
 
-const ProductsInRequests = () => {
+const ProductsInRequests = ({ request, getRequests }: any) => {
+  const adminContext = useContext(AdminContext)
   const [showProducts, setShowProducts] = useState(false)
+  const user = useAppSelector(({ userStore }) => userStore.user)
 
-  const products = [
-    {
-      name: 'Monitor HP Full HD',
-      sector: 'Almocharifado',
-      place: 'Segundo andar',
-      barcodes: ['1231231231231', '1231231231231', '12312312312312']
-    },
-    {
-      name: 'Teclado',
-      sector: 'Almocharifado',
-      place: 'Segundo andar',
-      barcodes: ['1231231231231', '1231231231231', '12312312312312']
+  const onRelationClick = async (product_id: string) => {
+    try {
+      await api.post(
+        '/relations',
+        { product_id, request_id: request.id },
+        { headers: { Authorization: `Bearer ${user?.token}` } }
+      )
+
+      getRequests()
+      adminContext.getProducts()
+    } catch (error) {
+      console.log(error)
     }
-  ]
+  }
 
   return (
     <Style>
@@ -68,8 +85,14 @@ const ProductsInRequests = () => {
 
       {showProducts && (
         <Products>
-          {products.map(product => (
-            <Product data={product} key={product.name} />
+          {adminContext.products.map(product => (
+            <Product
+              user={user}
+              data={product}
+              key={product.name}
+              requestId={request.id}
+              onRelationClick={onRelationClick}
+            />
           ))}
         </Products>
       )}

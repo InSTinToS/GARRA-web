@@ -2,7 +2,6 @@ import { styled, theme } from '@app/styles'
 
 import OriginalButton from '@app/components/atoms/Button'
 import BarcodeIcon from '@app/components/atoms/icons/Barcode'
-import CloseIcon from '@app/components/atoms/icons/Close'
 
 export const ModalContent = styled('section', {
   flexCenter: 'col'
@@ -16,19 +15,6 @@ export const ScannerBackground = styled('div', {
   radius: '$4',
 
   bg: '$black'
-})
-
-export const BarCodes = styled('ul', {
-  pb: '$8',
-  pr: '$6',
-  mt: '$6',
-
-  maxHeight: '$105',
-  overflowY: 'scroll',
-
-  'li + li': {
-    mt: '$6'
-  }
 })
 
 export const Button = styled(OriginalButton, {
@@ -47,27 +33,31 @@ export const Label = styled('label', {
 
 export const Input = styled('input', {
   "&[type='text'], &[type='number']": {
-    border: 'none',
-    p: '$2',
+    height: '$11',
+    px: '$2',
+
     ml: '$4',
     flex: 1,
     radius: '$4',
+    border: 'none',
     outline: 'none',
+    minWidth: 0,
+
     bg: '$tertiary'
   }
 })
 
 export const BarCode = styled(BarcodeIcon, {
   height: '$6',
-  mx: '$4',
 
   path: { stroke: '$secondary' }
 })
 
 export const BarCodeField = styled('div', {
   flexCenter: 'row',
-  py: '$2',
   px: '$4',
+  py: '$2',
+  mt: '$6',
 
   width: '100%',
 
@@ -86,32 +76,14 @@ export const BarCodeField = styled('div', {
   svg: { height: '$6', path: { fill: '$error' } }
 })
 
-export const Header = styled('header', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-
-  width: '100%',
-
-  fontSize: '$4',
-  fontWeight: '$5',
-  p: '$10'
-})
-
-export const Close = styled(CloseIcon, {
-  height: '$8',
-
-  path: { fill: '$tertiary' }
-})
-
 export const Form = styled('form', {
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
+  px: '$4',
 
-  pt: '$8',
-
-  width: '$sm'
+  width: '100vw',
+  maxWidth: '$md'
 })
 
 export const Section = styled('section', {
@@ -123,6 +95,11 @@ export const Section = styled('section', {
   py: '$10',
 
   bg: '$secondary'
+})
+
+export const Video = styled('video', {
+  width: '100%',
+  my: '$4'
 })
 
 export const Style = styled('main', {

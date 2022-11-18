@@ -28,22 +28,26 @@ export const Description = styled('label', {
   my: '$4',
 
   textarea: {
-    width: '$sm',
+    mt: '$4',
+    width: '70vw',
     height: '$40',
-    resize: 'none',
-    mt: '$4'
+    resize: 'none'
+  },
+
+  '@md': {
+    textarea: {
+      width: '$sm'
+    }
   }
 })
 
 export const Form = styled('form', {
   flexCenter: 'col',
-  pt: '$8',
-
-  width: '$sm'
+  pt: '$8'
 })
 
 export const Style = styled('section', {
-  p: '$10',
+  p: '$6',
   radius: '$4',
 
   bg: '$tertiary'

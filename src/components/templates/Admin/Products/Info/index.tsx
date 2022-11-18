@@ -1,31 +1,46 @@
 import { Style } from './styles'
 
-import BarCodes from '../BarCodes'
+import { formatDate } from '@app/utils/date/format'
+
+import { IProduct } from '@app/alltypes'
 
 interface IInfo {
-  data: {
-    name: string
-    place?: string
-    sector?: string
-    barCodes: string[]
-  }
+  data: IProduct
 }
 
 const Info = ({ data }: IInfo) => (
   <Style>
-    {data.place && (
-      <li>
-        <strong>LOCAL:</strong> {data.place}
-      </li>
-    )}
+    <li>
+      <strong>NOME:</strong> {data.name}
+    </li>
 
-    {data.sector && (
-      <li>
-        <strong>SETOR:</strong> {data.sector}
-      </li>
-    )}
+    <li>
+      <strong>QUANTIDADE:</strong> {data.quantity}
+    </li>
 
-    <BarCodes codes={data.barCodes} name={data.name} />
+    <li>
+      <strong>CÓDIGO DE BARRAS:</strong> {data.barcode}
+    </li>
+
+    <li>
+      <strong>LOCAL:</strong> Almoxarifado
+    </li>
+
+    <li>
+      <strong>SETOR:</strong> Segundo Andar
+    </li>
+
+    <li>
+      <strong>ADICIONADO POR:</strong> {data.author?.full_name}
+    </li>
+
+    <li>
+      <strong>CRIADO EM:</strong> {formatDate(data.created_at)}
+    </li>
+
+    <li>
+      <strong>MODIFICADO EM:</strong> {formatDate(data.updated_at)}
+    </li>
   </Style>
 )
 

@@ -25,25 +25,46 @@ export const Arrow = styled(ArrowIcon, {
 })
 
 export const Products = styled('ul', {
-  p: '$4',
-  bg: `${hexToRgba(theme.colors.secondary.value, 0.4)}`,
+  flexCenter: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-evenly',
 
-  'li + li': { mt: '$4' }
+  p: '$4',
+  pr: '$6',
+  maxHeight: '$96',
+  overflow: 'hidden',
+  overflowY: 'scroll',
+
+  bg: `${hexToRgba(theme.colors.secondary.value, 0.4)}`
 })
 
 export const ProductData = styled('p', {
-  color: '$tertiary'
+  color: '$tertiary',
+  px: '$4',
+  py: '$8',
+  fontSize: '$2'
 })
 
 export const ProductStyle = styled('li', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  flexDirection: 'column',
+
+  width: '100%',
+
+  bg: '$secondary',
+  radius: '$4',
+  m: '$4',
+  maxWidth: '$96',
 
   button: {
-    px: '$4',
-    radius: '$2',
+    fontSize: '$2',
+
     height: '$10',
+    radiusB: '$4',
+
+    width: '100%',
     bg: '$primary',
     color: '$tertiary'
   }
@@ -55,7 +76,18 @@ export const Search = styled('label', {
   size: '100%',
   px: '$2',
 
-  input: { color: '$tertiary', py: '$2', size: '100%' }
+  input: {
+    fontSize: '$2',
+    color: '$tertiary',
+    py: '$2',
+    size: '100%'
+  },
+
+  '@md': {
+    input: {
+      fontSize: '$3'
+    }
+  }
 })
 
 export const Loupe = styled(LoupeIcon, {

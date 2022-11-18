@@ -1,21 +1,60 @@
-import { Header, Radio, Style } from './styles'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Description, Footer, Header, List, Style } from './styles'
 
 import Button from '@app/components/atoms/Button'
 
 import Modal from '@app/components/molecules/Modal'
 import { IForwardModal } from '@app/components/molecules/Modal/types'
-
-import List from '@app/components/organisms/List'
+import { Search } from '@app/components/molecules/Search'
 
 import { CreateRequest } from '@app/components/templates/Requests/CreateRequest'
 
+import { useAppSelector } from '@app/hooks/useAppSelector'
+
+import { api } from '@app/services/api'
+
 import { TNextPageWithLayout } from '@app/types/next.types'
 
+import { formatDate } from '@app/utils/date/format'
+
 import Head from 'next/head'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const Requests: TNextPageWithLayout = () => {
   const ref = useRef<IForwardModal>(null)
+  const [requests, setRequests] = useState<any[]>([])
+  const user = useAppSelector(({ userStore }) => userStore.user)
+
+  const onReqDeleteClick = async (req: any) => {
+    if (user?.token) {
+      await api.delete(`/requests/${req.id}`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+
+      setRequests(prev => prev.filter(prev => prev.id !== req.id))
+    }
+  }
+
+  const items = requests.map(req => ({
+    header: [formatDate(req.created_at)],
+    onCloseClick: () => onReqDeleteClick(req),
+    content: <Description>{req.description}</Description>
+  }))
+
+  const getRequests = async () => {
+    if (user) {
+      const res = await api.get('/requests', {
+        params: { user_id: user.id },
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+
+      setRequests(res.data.requests.reverse())
+    }
+  }
+
+  useEffect(() => {
+    getRequests()
+  }, [])
 
   return (
     <>
@@ -27,24 +66,19 @@ const Requests: TNextPageWithLayout = () => {
         <CreateRequest
           onCloseClick={() => {
             ref.current?.triggerModal({ open: false })
+            getRequests()
           }}
         />
       </Modal>
 
       <Style>
         <Header>
-          <form>
-            <Radio htmlFor=''>
-              <input type='radio' />
-              Pendentes
-            </Radio>
+          <Search placeholder='Pesquisar pedido' />
+        </Header>
 
-            <Radio htmlFor=''>
-              <input type='radio' />
-              Encerrados
-            </Radio>
-          </form>
+        <List items={items} />
 
+        <Footer>
           <Button
             type='button'
             onClick={() => {
@@ -53,122 +87,7 @@ const Requests: TNextPageWithLayout = () => {
           >
             Novo Pedido
           </Button>
-        </Header>
-
-        <section>
-          <List
-            items={[
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              },
-              {
-                header: ['Monitor Dell Full HD', '19/08/2001', 'Julio Casares'],
-                content: (
-                  <p key='1'>
-                    Solicito um novo monitor para uso pessoal com o objetivo de
-                    melhorar a produtividade, pois o atual é muito pequeno.
-                  </p>
-                )
-              }
-            ]}
-          />
-        </section>
+        </Footer>
       </Style>
     </>
   )
