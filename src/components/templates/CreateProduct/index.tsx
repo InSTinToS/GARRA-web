@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable @next/next/no-img-element */
 import {
   BarCode,
@@ -9,7 +11,8 @@ import {
   ModalContent,
   ScannerBackground,
   Section,
-  Style
+  Style,
+  Video
 } from './styles'
 
 import Modal from '@app/components/molecules/Modal'
@@ -23,13 +26,32 @@ import { TNextPageWithLayout } from '@app/types/next.types'
 
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const CreateProduct: TNextPageWithLayout = () => {
   const user = useAppSelector(({ userStore }) => userStore.user)
+  const [showBarcode, setShowBarcode] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const router = useRouter()
 
-  const modalRef = useRef<IForwardModal>(null)
+  const [video, setVideo] = useState<any>()
+
+  const getVideo = async () => {
+    if (!videoRef.current?.srcObject) {
+      const media = await navigator.mediaDevices.getUserMedia({
+        video: { width: 1920, height: 1080 }
+      })
+
+      if (videoRef.current) videoRef.current.srcObject = media
+
+      videoRef.current?.play()
+    }
+  }
+
+  useEffect(() => {
+    getVideo()
+  }, [getVideo])
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -49,11 +71,9 @@ const CreateProduct: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Modal ref={modalRef}>
+      {/* <Modal ref={modalRef}>
         <ModalContent>
-          <ScannerBackground>
-            <img src='/scanner.png' alt='Scanner' />
-          </ScannerBackground>
+          <ScannerBackground></ScannerBackground>
 
           <Button
             type='button'
@@ -65,7 +85,7 @@ const CreateProduct: TNextPageWithLayout = () => {
             Cancelar
           </Button>
         </ModalContent>
-      </Modal>
+      </Modal> */}
 
       <Style>
         <Section>
@@ -105,12 +125,14 @@ const CreateProduct: TNextPageWithLayout = () => {
               <button
                 type='button'
                 onClick={() => {
-                  modalRef.current?.triggerModal({ open: true })
+                  setShowBarcode(prev => !prev)
                 }}
               >
                 <BarCode />
               </button>
             </BarCodeField>
+
+            {showBarcode && <Video ref={videoRef} />}
 
             <Button
               onClick={e => {

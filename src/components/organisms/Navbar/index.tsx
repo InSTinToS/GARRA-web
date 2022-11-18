@@ -16,13 +16,12 @@ const Navbar = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    ;(async () => {
-      const res = await dispatch(verifyAuthenticationThunk({}))
-
-      if (res?.payload?.id)
-        router.push(res?.payload?.register ? '/admin' : '/requests')
-      else router.push('/')
-    })()
+    // ;(async () => {
+    //   const res = await dispatch(verifyAuthenticationThunk({}))
+    //   if (res?.payload?.id)
+    //     router.push(res?.payload?.register ? '/admin' : '/requests')
+    //   else router.push('/')
+    // })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -97,6 +97,11 @@ export const Section = styled('section', {
   bg: '$secondary'
 })
 
+export const Video = styled('video', {
+  width: '100%',
+  my: '$4'
+})
+
 export const Style = styled('main', {
   display: 'flex',
   flexDirection: 'column',
