@@ -2,11 +2,8 @@
 import {
   BarCode,
   BarCodeField,
-  BarCodes,
   Button,
-  Close,
   Form,
-  Header,
   Input,
   Label,
   ModalContent,
@@ -18,17 +15,37 @@ import {
 import Modal from '@app/components/molecules/Modal'
 import { IForwardModal } from '@app/components/molecules/Modal/types'
 
+import { useAppSelector } from '@app/hooks/useAppSelector'
+
+import { api } from '@app/services/api'
+
 import { TNextPageWithLayout } from '@app/types/next.types'
 
+import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const CreateProduct: TNextPageWithLayout = () => {
+  const user = useAppSelector(({ userStore }) => userStore.user)
   const router = useRouter()
-  const modalRef = useRef<IForwardModal>(null)
-  const [barCodesQnt, setBarCodesQnt] = useState(3)
 
-  const barCodes = new Array(barCodesQnt).fill('').map((_, i) => i + 1)
+  const modalRef = useRef<IForwardModal>(null)
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      quantity: 1,
+      barcode: ''
+    },
+    onSubmit: async data => {
+      if (user?.token) {
+        await api.post('/products', data, {
+          headers: { Authorization: `Bearer ${user.token}` }
+        })
+      }
+
+      router.push('/admin')
+    }
+  })
 
   return (
     <>
@@ -51,52 +68,54 @@ const CreateProduct: TNextPageWithLayout = () => {
       </Modal>
 
       <Style>
-        <Header>
-          Por favor, informar os campos necessarios para abertura do chamado.
-          Algumas informações serão preencidas automaticamente pelo seu perfil.
-        </Header>
-
         <Section>
           <Form>
             <Label htmlFor=''>
               Nome:
-              <Input type='text' />
+              <Input
+                type='text'
+                name='name'
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
             </Label>
 
             <Label>
               Quantidade:
-              <Input type='number' min={1} defaultValue={1} />
+              <Input
+                min={1}
+                max={10}
+                type='number'
+                name='quantity'
+                defaultValue={1}
+                value={formik.values.quantity}
+                onChange={formik.handleChange}
+              />
             </Label>
 
-            <BarCodes>
-              {barCodes.map(value => (
-                <li key={value}>
-                  <BarCodeField>
-                    <input
-                      type='text'
-                      placeholder={`Código de barras (${value})`}
-                    />
+            <BarCodeField>
+              <input
+                type='text'
+                name='barcode'
+                onChange={formik.handleChange}
+                value={formik.values.barcode}
+                placeholder='Código de barras'
+              />
 
-                    <button
-                      type='button'
-                      onClick={() => {
-                        modalRef.current?.triggerModal({ open: true })
-                      }}
-                    >
-                      <BarCode />
-                    </button>
-
-                    <Close />
-                  </BarCodeField>
-                </li>
-              ))}
-            </BarCodes>
+              <button
+                type='button'
+                onClick={() => {
+                  modalRef.current?.triggerModal({ open: true })
+                }}
+              >
+                <BarCode />
+              </button>
+            </BarCodeField>
 
             <Button
               onClick={e => {
                 e.preventDefault()
-
-                router.push('/admin')
+                formik.handleSubmit()
               }}
             >
               Adicionar
@@ -107,4 +126,5 @@ const CreateProduct: TNextPageWithLayout = () => {
     </>
   )
 }
+
 export default CreateProduct

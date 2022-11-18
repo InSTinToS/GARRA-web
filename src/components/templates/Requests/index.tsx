@@ -1,16 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
-/* eslint-disable @typescript-eslint/no-extra-semi */
-import { Header, Radio, Style } from './styles'
-
-import { Close } from './CreateRequest/styles'
+import { Description, Footer, Header, List, Style } from './styles'
 
 import Button from '@app/components/atoms/Button'
 
 import Modal from '@app/components/molecules/Modal'
 import { IForwardModal } from '@app/components/molecules/Modal/types'
-
-import List from '@app/components/organisms/List'
+import { Search } from '@app/components/molecules/Search'
 
 import { CreateRequest } from '@app/components/templates/Requests/CreateRequest'
 
@@ -30,38 +25,20 @@ const Requests: TNextPageWithLayout = () => {
   const [requests, setRequests] = useState<any[]>([])
   const user = useAppSelector(({ userStore }) => userStore.user)
 
+  const onReqDeleteClick = async (req: any) => {
+    if (user?.token) {
+      await api.delete(`/requests/${req.id}`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+
+      setRequests(prev => prev.filter(prev => prev.id !== req.id))
+    }
+  }
+
   const items = requests.map(req => ({
-    customHeader: (
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          color: 'white',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
-        {formatDate(req.created_at)}
-
-        <button
-          type='button'
-          style={{ padding: 0, width: 'auto' }}
-          onClick={async () => {
-            if (user?.token) {
-              await api.delete(`/requests/${req.id}`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-              })
-
-              setRequests(prev => prev.filter(prev => prev.id !== req.id))
-            }
-          }}
-        >
-          <Close css={{ path: { fill: '$tertiary' } }} />
-        </button>
-      </div>
-    ),
-
-    content: <p key='1'>{req.description}</p>
+    header: [formatDate(req.created_at)],
+    onCloseClick: () => onReqDeleteClick(req),
+    content: <Description>{req.description}</Description>
   }))
 
   const getRequests = async () => {
@@ -96,18 +73,12 @@ const Requests: TNextPageWithLayout = () => {
 
       <Style>
         <Header>
-          <form>
-            <Radio htmlFor=''>
-              <input type='radio' />
-              Pendentes
-            </Radio>
+          <Search placeholder='Pesquisar pedido' />
+        </Header>
 
-            <Radio htmlFor=''>
-              <input type='radio' />
-              Encerrados
-            </Radio>
-          </form>
+        <List items={items} />
 
+        <Footer>
           <Button
             type='button'
             onClick={() => {
@@ -116,11 +87,7 @@ const Requests: TNextPageWithLayout = () => {
           >
             Novo Pedido
           </Button>
-        </Header>
-
-        <section>
-          <List items={items} />
-        </section>
+        </Footer>
       </Style>
     </>
   )

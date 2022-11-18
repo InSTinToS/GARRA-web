@@ -8,10 +8,9 @@ import {
   Input,
   Label,
   Logo,
-  Style
+  Style,
+  Submit
 } from './styles'
-
-import Button from '@app/components/atoms/Button'
 
 import { useAppSelector } from '@app/hooks/useAppSelector'
 
@@ -68,7 +67,7 @@ const Profile: TNextPageWithLayout = () => {
           </Form>
         </Card>
 
-        <Button>Salvar alterações</Button>
+        <Submit>Salvar alterações</Submit>
       </Style>
     </>
   )

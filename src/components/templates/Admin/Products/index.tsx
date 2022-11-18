@@ -1,52 +1,55 @@
-import { Button, Loupe, Search, Section, Style } from './styles'
+import { Button, Footer, Header, List, Style } from './styles'
 
 import Info from './Info'
 
-import List from '@app/components/organisms/List'
+import { Search } from '@app/components/molecules/Search'
 
+import { useAppSelector } from '@app/hooks/useAppSelector'
+
+import { api } from '@app/services/api'
+
+import { formatDate } from '@app/utils/date/format'
+
+import { AdminContext } from '..'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
 
 const Products = () => {
   const router = useRouter()
+  const adminContext = useContext(AdminContext)
+  const user = useAppSelector(({ userStore }) => userStore.user)
 
-  const items = [
-    {
-      header: ['Monitor HP Full HD (5)', '01/05/2022', 'Julio Casares'],
-      content: (
-        <Info
-          key='Monitor HP Full HD (5)'
-          data={{
-            place: 'Almoxarifado',
-            sector: 'Segundo Andar',
-            name: 'Monitor HP Full HD (5)',
-            barCodes: [
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041',
-              '1231241240192041'
-            ]
-          }}
-        />
-      )
+  const onProductDeleteClick = async (req: any) => {
+    if (user?.token) {
+      await api.delete(`/products/${req.id}`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+
+      adminContext.getProducts()
     }
-  ]
+  }
+
+  const items = adminContext.products.map(product => ({
+    onCloseClick: () => {
+      onProductDeleteClick(product)
+    },
+    header: [
+      `${product.name} (${product.quantity})`,
+      `${formatDate(product.created_at)}`,
+      `${product.author?.full_name}`
+    ],
+    content: <Info key={product.id} data={product} />
+  }))
 
   return (
     <Style>
-      <Section>
-        <Search>
-          <Loupe />
+      <Header>
+        <Search variant='secondary' placeholder='Pesquisar produtos' />
+      </Header>
 
-          <input type='text' placeholder='Pesquisar produtos' />
-        </Search>
+      <List variant='secondary' items={items} />
 
-        <List variant='secondary' items={items} />
-
+      <Footer>
         <Button
           type='button'
           onClick={() => {
@@ -55,7 +58,7 @@ const Products = () => {
         >
           Adicionar produto
         </Button>
-      </Section>
+      </Footer>
     </Style>
   )
 }

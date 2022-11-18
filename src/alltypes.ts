@@ -16,10 +16,12 @@ export interface IUser {
 }
 
 export interface IProduct {
+  id: string
   name: string
+  barcode: string
   quantity: number
-  barcode: string[]
+  created_by: string
   created_at: string
   updated_at: string
-  location: ILocations
+  author?: IUser
 }

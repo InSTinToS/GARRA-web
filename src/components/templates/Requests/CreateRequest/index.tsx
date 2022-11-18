@@ -48,6 +48,7 @@ export const CreateRequest = ({ onCloseClick }: ICreateRequestProps) => {
           <input
             min={1}
             type='number'
+            name='quantity'
             value={formik.values.quantity}
             onChange={formik.handleChange}
           />

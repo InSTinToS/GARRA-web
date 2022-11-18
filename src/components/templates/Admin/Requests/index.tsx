@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Aside, Loupe, Radio, Search, Section, Style } from './styles'
+import { Description, Header, List, Style } from './styles'
 
 import ProductsInRequests from './ProductsInRequests'
 
-import List from '@app/components/organisms/List'
+import { Search } from '@app/components/molecules/Search'
 
 import { useAppSelector } from '@app/hooks/useAppSelector'
 
@@ -16,19 +16,6 @@ import { useEffect, useState } from 'react'
 const Requests = () => {
   const [requests, setRequests] = useState<any>([])
   const user = useAppSelector(({ userStore }) => userStore.user)
-
-  const items = requests.map((req: any) => ({
-    header: [formatDate(req.created_at), req.quantity, req.author],
-    content: (
-      <>
-        <p key='1' style={{ marginBottom: 16 }}>
-          {req.description}
-        </p>
-
-        <ProductsInRequests />
-      </>
-    )
-  }))
 
   const getRequests = async () => {
     if (user?.token) {
@@ -50,35 +37,29 @@ const Requests = () => {
     }
   }
 
+  const items = requests.map((req: any) => ({
+    lowOpacity: req.quantity <= 0,
+    header: [formatDate(req.created_at), req.quantity, req.author],
+    content: (
+      <>
+        <Description>{req.description}</Description>
+
+        <ProductsInRequests request={req} getRequests={getRequests} />
+      </>
+    )
+  }))
+
   useEffect(() => {
     getRequests()
   }, [user?.token])
 
   return (
     <Style>
-      <Aside>
-        <form>
-          <Radio htmlFor=''>
-            <input type='radio' />
-            Pendentes
-          </Radio>
+      <Header>
+        <Search placeholder='Pesquisar pedidos' />
+      </Header>
 
-          <Radio htmlFor=''>
-            <input type='radio' />
-            Encerrados
-          </Radio>
-        </form>
-      </Aside>
-
-      <Section>
-        <Search>
-          <Loupe />
-
-          <input type='text' placeholder='Pesquisar pedidos' />
-        </Search>
-
-        <List items={items} />
-      </Section>
+      <List items={items} />
     </Style>
   )
 }

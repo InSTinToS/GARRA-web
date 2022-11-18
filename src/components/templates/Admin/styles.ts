@@ -1,8 +1,9 @@
 import { styled } from '@app/styles'
 
 export const Header = styled('div', {
-  width: '100%',
   flexCenter: 'row',
+
+  mx: 'auto',
 
   button: {
     flex: 1,
