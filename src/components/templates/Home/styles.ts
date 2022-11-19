@@ -4,12 +4,21 @@ import OriginalButton from '@app/components/atoms/Button'
 import { Switch as OriginalSwitch } from '@app/components/atoms/Switch'
 
 export const Error = styled('div', {
+  flexCenter: 'row',
   width: '100%',
   maxWidth: '$xs',
   p: '$4',
   mb: '$4',
   radius: '$4',
   textAlign: 'center',
+
+  svg: {
+    mr: '$2',
+    height: '$5',
+    path: {
+      fill: '$tertiary'
+    }
+  },
 
   bg: '$error',
   color: '$tertiary'

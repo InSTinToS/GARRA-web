@@ -16,6 +16,7 @@ import {
 import { signInYupSchema, signUpYupSchema } from './schemas'
 
 import { Link } from '@app/components/atoms/Link'
+import Alert from '@app/components/atoms/icons/Alert'
 import Arrow from '@app/components/atoms/icons/Arrow'
 
 import { useAppDispatch } from '@app/hooks/useAppDispatch'
@@ -32,7 +33,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const Err = ({ error }: any) => (error ? <Error>{error}</Error> : <></>)
+export const Err = ({ error, ...props }: any) =>
+  error ? (
+    <Error {...props}>
+      <Alert />
+      {error}
+    </Error>
+  ) : (
+    <></>
+  )
 
 const Home = () => {
   const router = useRouter()
@@ -60,12 +69,11 @@ const Home = () => {
           password: data.password
         })
 
-        if (data.register) {
+        if (data.register)
           await api.post('/admins', {
             register: data.register,
             user_id: res.data.createdUser.id
           })
-        }
 
         setShowSignUp(false)
       } catch (error) {
