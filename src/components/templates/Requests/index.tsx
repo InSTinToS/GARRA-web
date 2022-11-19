@@ -42,10 +42,10 @@ const Requests: TNextPageWithLayout = () => {
   }))
 
   const getRequests = async () => {
-    if (user) {
+    if (user?.token) {
       const res = await api.get('/requests', {
         params: { user_id: user.id },
-        headers: { Authorization: `Bearer ${user.token}` }
+        headers: { Authorization: `Bearer ${user?.token}` }
       })
 
       setRequests(res.data.requests.reverse())
@@ -55,6 +55,8 @@ const Requests: TNextPageWithLayout = () => {
   useEffect(() => {
     getRequests()
   }, [])
+
+  if (!user?.token) return <></>
 
   return (
     <>

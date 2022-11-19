@@ -1,7 +1,14 @@
 import { styled } from '@app/styles'
 
+import BoxesIcon from '@app/components/atoms/icons/Boxes'
 import DefaultAvatarIcon from '@app/components/atoms/icons/DefaultAvatar'
 import LogoutIcon from '@app/components/atoms/icons/Logout'
+
+export const Boxes = styled(BoxesIcon, {
+  height: '$4',
+  fill: '$secondary',
+  mr: 2
+})
 
 export const Logout = styled(LogoutIcon, {
   height: '$4',

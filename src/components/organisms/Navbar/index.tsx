@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
 
 /* eslint-disable @next/next/no-img-element */
-import { Content, DefaultAvatar, Logout, Style } from './styles'
+import { Boxes, Content, DefaultAvatar, Logout, Style } from './styles'
 
 import { useAppDispatch } from '@app/hooks/useAppDispatch'
+import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { userStore } from '@app/store/user'
 import { verifyAuthenticationThunk } from '@app/store/user/extraReducers/verifyAuthentication'
@@ -14,16 +15,23 @@ import { ReactElement, useEffect } from 'react'
 const Navbar = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const user = useAppSelector(({ userStore }) => userStore.user)
 
   useEffect(() => {
-    // ;(async () => {
-    //   const res = await dispatch(verifyAuthenticationThunk({}))
-    //   if (res?.payload?.id)
-    //     router.push(res?.payload?.register ? '/admin' : '/requests')
-    //   else router.push('/')
-    // })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ;(async () => {
+      const res = await dispatch(verifyAuthenticationThunk({}))
+
+      if (!res?.payload?.id && router.pathname !== '/') router.push('/')
+      if (
+        res?.payload?.id &&
+        !res.payload.register &&
+        router.pathname.includes('admin')
+      )
+        router.push('/requests')
+    })()
   }, [])
+
+  if (!user?.token) return <></>
 
   return (
     <Style>
@@ -38,6 +46,16 @@ const Navbar = () => {
         </button>
 
         <div>
+          {user.register && (
+            <button
+              onClick={() => {
+                router.push('/admin')
+              }}
+            >
+              <Boxes />
+            </button>
+          )}
+
           <button
             type='button'
             onClick={() => {

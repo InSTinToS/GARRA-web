@@ -8,15 +8,10 @@ import {
   Form,
   Input,
   Label,
-  ModalContent,
-  ScannerBackground,
   Section,
   Style,
   Video
 } from './styles'
-
-import Modal from '@app/components/molecules/Modal'
-import { IForwardModal } from '@app/components/molecules/Modal/types'
 
 import { useAppSelector } from '@app/hooks/useAppSelector'
 
@@ -36,17 +31,21 @@ const CreateProduct: TNextPageWithLayout = () => {
 
   const getVideo = async () => {
     if (!videoRef.current?.srcObject) {
-      const media = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: { ideal: 'environment' },
-          width: 1920,
-          height: 1080
-        }
-      })
+      try {
+        const media = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: 'environment' },
+            width: 1920,
+            height: 1080
+          }
+        })
 
-      if (videoRef.current) videoRef.current.srcObject = media
+        if (videoRef.current) videoRef.current.srcObject = media
 
-      videoRef.current?.play()
+        videoRef.current?.play()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -55,11 +54,7 @@ const CreateProduct: TNextPageWithLayout = () => {
   }, [getVideo])
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      quantity: 1,
-      barcode: ''
-    },
+    initialValues: { name: '', quantity: 1, barcode: '' },
     onSubmit: async data => {
       if (user?.token) {
         await api.post('/products', data, {
@@ -71,24 +66,10 @@ const CreateProduct: TNextPageWithLayout = () => {
     }
   })
 
+  if (!user?.register || !user?.token) return <></>
+
   return (
     <>
-      {/* <Modal ref={modalRef}>
-        <ModalContent>
-          <ScannerBackground></ScannerBackground>
-
-          <Button
-            type='button'
-            css={{ bg: '$error' }}
-            onClick={() => {
-              modalRef.current?.triggerModal({ open: false })
-            }}
-          >
-            Cancelar
-          </Button>
-        </ModalContent>
-      </Modal> */}
-
       <Style>
         <Section>
           <Form>

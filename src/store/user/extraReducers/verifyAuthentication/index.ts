@@ -3,9 +3,10 @@ import { api } from '@app/services/api'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const verifyAuthentication = async (_: any, { getState }: any) => {
-  try {
-    const { userStore } = getState()
+  const { userStore } = getState()
+  let newUser = userStore.user
 
+  try {
     if (userStore.user !== undefined) return userStore.user
 
     const token = localStorage.getItem('@GARRA-token')
@@ -16,13 +17,15 @@ const verifyAuthentication = async (_: any, { getState }: any) => {
       headers: { Authorization: `Bearer ${token}` }
     })
 
+    newUser = { ...data.user, token }
+
     const adminsRes = await api.get(`/admins/${data.user.id}`)
 
     const register = adminsRes.data.admin.register
 
     return { ...data.user, token, register }
   } catch (error: any) {
-    return { error: 'Error inesperado tente novamente mais tarde' }
+    return { ...newUser }
   }
 }
 

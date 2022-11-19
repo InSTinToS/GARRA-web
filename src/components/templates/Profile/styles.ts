@@ -1,9 +1,56 @@
+import { Err } from '../Home'
+
 import { styled, theme } from '@app/styles'
 
 import Button from '@app/components/atoms/Button'
 import DefaultAvatarIcon from '@app/components/atoms/icons/DefaultAvatar'
 
+export const Error = styled(Err, {
+  bg: '$tertiary',
+  color: '$error',
+  width: '100%',
+  maxWidth: 'none',
+  svg: {
+    path: {
+      fill: '$error'
+    }
+  }
+})
+
 export const Submit = styled(Button, { mb: '$8', '@md': { mb: 0 } })
+
+export const ConfirmPasswordModal = styled('div', {
+  flexCenter: 'col',
+  p: '$4',
+
+  '> div:first-child': {
+    svg: { fill: '$error' },
+    alignSelf: 'flex-end',
+    mb: '$4'
+  },
+
+  label: {
+    color: '$primary'
+  },
+
+  input: {
+    "&[type='password']": {
+      color: '$primary',
+      b1: '$primary',
+      pl: '$2',
+      radius: '$2'
+    }
+  },
+
+  button: {
+    mt: '$6',
+    maxWidth: 'none',
+    width: '100%'
+  },
+
+  radius: '$4',
+  bg: '$tertiary'
+})
 
 export const DefaultAvatar = styled(DefaultAvatarIcon, {
   fill: '$primary',
