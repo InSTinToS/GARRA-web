@@ -42,11 +42,11 @@ const Home = () => {
 
   const signUpFormik = useFormik({
     initialValues: {
-      admin: false,
-      full_name: '',
       email: '',
+      admin: false,
       password: '',
       register: '',
+      full_name: '',
       confirmPassword: ''
     },
     validateOnBlur: true,

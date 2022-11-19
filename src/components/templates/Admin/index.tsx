@@ -50,7 +50,9 @@ const Admin: TNextPageWithLayout = () => {
 
   useEffect(() => {
     getProducts()
-  }, [user?.token])
+  }, [getProducts])
+
+  if (!user?.register || !user?.token) return <></>
 
   return (
     <>

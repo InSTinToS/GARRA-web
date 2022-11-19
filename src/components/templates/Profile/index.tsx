@@ -21,6 +21,8 @@ import Head from 'next/head'
 const Profile: TNextPageWithLayout = () => {
   const user = useAppSelector(({ userStore }) => userStore.user)
 
+  if (!user?.token) return <></>
+
   return (
     <>
       <Head>

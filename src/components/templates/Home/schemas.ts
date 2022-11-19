@@ -63,8 +63,7 @@ export const signInYupSchema = Yup.object().shape({
     .matches(email.matches.value, email.matches.error)
     .required(email.required.error),
 
-  password: Yup.string()
-  .required(password.required.error)
+  password: Yup.string().required(password.required.error)
 })
 
 export const signUpYupSchema = Yup.object().shape({
