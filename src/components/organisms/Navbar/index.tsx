@@ -22,14 +22,18 @@ const Navbar = () => {
       const res = await dispatch(verifyAuthenticationThunk({}))
 
       if (!res?.payload?.id && router.pathname !== '/') router.push('/')
+
       if (
         res?.payload?.id &&
         !res.payload.register &&
         router.pathname.includes('admin')
       )
         router.push('/requests')
+
+      if (res.payload.register && router.pathname.includes('requests'))
+        router.push('/admin')
     })()
-  }, [])
+  }, [dispatch, router])
 
   if (!user?.token) return <></>
 
@@ -39,7 +43,7 @@ const Navbar = () => {
         <button
           type='button'
           onClick={() => {
-            router.push('/requests')
+            router.push(user.register ? '/admin' : '/requests')
           }}
         >
           <img src='/logo.png' alt='Garra logo' />
