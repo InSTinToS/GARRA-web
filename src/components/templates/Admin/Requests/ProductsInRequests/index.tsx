@@ -67,7 +67,8 @@ const ProductsInRequests = ({ request, getRequests }: any) => {
         : adminContext.products.filter(
             value =>
               value.name.toLowerCase().includes(search.toLowerCase()) ||
-              String(value.quantity).includes(search.toLowerCase())
+              String(value.quantity).includes(search.toLowerCase()) ||
+              String(value.barcode).includes(search.toLowerCase())
           )
 
     setProducts(showingProducts)

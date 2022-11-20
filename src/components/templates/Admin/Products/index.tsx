@@ -54,7 +54,8 @@ const Products = () => {
               formatDate(value.created_at)
                 ?.toLowerCase()
                 .includes(search.toLowerCase()) ||
-              String(value.quantity).includes(search.toLowerCase())
+              String(value.quantity).includes(search.toLowerCase()) ||
+              String(value.barcode).includes(search.toLowerCase())
           )
 
     setProducts(showingProducts)
