@@ -15,18 +15,21 @@ import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { api } from '@app/services/api'
 
+import { formatDate } from '@app/utils/date/format'
+
 import { IProduct } from '@app/alltypes'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 export interface IProductProps {
+  css: any
   user: any
   data: IProduct
   requestId: string
   onRelationClick: (product_id: string) => void
 }
 
-const Product = ({ data, onRelationClick }: IProductProps) => (
-  <ProductStyle>
+const Product = ({ data, onRelationClick, ...props }: IProductProps) => (
+  <ProductStyle {...props}>
     <ProductData>
       {data.name} ({data.quantity})
       <br />
@@ -54,6 +57,22 @@ const ProductsInRequests = ({ request, getRequests }: any) => {
   const [showProducts, setShowProducts] = useState(false)
   const user = useAppSelector(({ userStore }) => userStore.user)
 
+  const [search, setSearch] = useState('')
+  const [products, setProducts] = useState<IProduct[]>(adminContext.products)
+
+  useEffect(() => {
+    const showingProducts =
+      search === ''
+        ? adminContext.products
+        : adminContext.products.filter(
+            value =>
+              value.name.toLowerCase().includes(search.toLowerCase()) ||
+              String(value.quantity).includes(search.toLowerCase())
+          )
+
+    setProducts(showingProducts)
+  }, [adminContext.products, search])
+
   const onRelationClick = async (product_id: string) => {
     try {
       await api.post(
@@ -79,19 +98,28 @@ const ProductsInRequests = ({ request, getRequests }: any) => {
         <Search>
           <Loupe />
 
-          <input type='text' placeholder='Pesquisar produtos' />
+          <input
+            type='text'
+            name='search'
+            value={search}
+            placeholder='Pesquisar pedidos'
+            onChange={(e: any) => {
+              setSearch(e.target.value)
+            }}
+          />
         </Search>
       </Header>
 
       {showProducts && (
         <Products>
-          {adminContext.products.map(product => (
+          {products.map(product => (
             <Product
               user={user}
               data={product}
               key={product.name}
               requestId={request.id}
               onRelationClick={onRelationClick}
+              css={{ opacity: product.quantity === 0 ? 0.5 : 1 }}
             />
           ))}
         </Products>
