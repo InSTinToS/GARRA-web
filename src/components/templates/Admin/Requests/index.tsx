@@ -14,7 +14,10 @@ import { formatDate } from '@app/utils/date/format'
 import { useEffect, useState } from 'react'
 
 const Requests = () => {
+  const [search, setSearch] = useState<any>('')
   const [requests, setRequests] = useState<any>([])
+  const [showingRequests, setShowingRequests] = useState([])
+
   const user = useAppSelector(({ userStore }) => userStore.user)
 
   const getRequests = async () => {
@@ -37,7 +40,7 @@ const Requests = () => {
     }
   }
 
-  const items = requests.map((req: any) => ({
+  const items = showingRequests.map((req: any) => ({
     lowOpacity: req.quantity <= 0,
     header: [formatDate(req.created_at), req.quantity, req.author],
     content: (
@@ -53,10 +56,34 @@ const Requests = () => {
     getRequests()
   }, [user?.token])
 
+  useEffect(() => {
+    const filteredRequests =
+      search === ''
+        ? requests
+        : requests.filter(
+            (value: any) =>
+              value.author.toLowerCase().includes(search.toLowerCase()) ||
+              formatDate(value.created_at)
+                ?.toLowerCase()
+                .includes(search.toLowerCase()) ||
+              value.description.toLowerCase().includes(search.toLowerCase()) ||
+              String(value.quantity).includes(search.toLowerCase())
+          )
+
+    setShowingRequests(filteredRequests)
+  }, [requests, search])
+
   return (
     <Style>
       <Header>
-        <Search placeholder='Pesquisar pedidos' />
+        <Search
+          name='search'
+          value={search}
+          placeholder='Pesquisar pedidos'
+          onChange={(e: any) => {
+            setSearch(e.target.value)
+          }}
+        />
       </Header>
 
       <List items={items} />

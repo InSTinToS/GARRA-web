@@ -64,8 +64,8 @@ export const Item = ({ variant, item }: IItemProps) => {
       <header>
         <button
           type='button'
-          onClick={() => setShowContent(prev => !prev)}
           style={{ width: '100%' }}
+          onClick={() => setShowContent(prev => !prev)}
         >
           {item?.customHeader || (
             <DefaultHeader
