@@ -1,8 +1,8 @@
 import { Style } from './styles'
 
-import { formatDate } from '@app/utils/date/format'
+import { IProduct } from '@app/types/api.types'
 
-import { IProduct } from '@app/alltypes'
+import { formatDate } from '@app/utils/date/format'
 
 interface IInfo {
   data: IProduct

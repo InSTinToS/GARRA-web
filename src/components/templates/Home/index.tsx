@@ -56,7 +56,9 @@ const Home = () => {
       password: '',
       register: '',
       full_name: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      place: '',
+      sector: ''
     },
     validateOnBlur: true,
     validateOnChange: false,
@@ -141,24 +143,25 @@ const Home = () => {
 
           <Logo src='/logo.png' alt='Garra logo' />
 
+          <Err
+            error={
+              (signUpFormik.touched.full_name &&
+                signUpFormik?.errors.full_name) ||
+              (signUpFormik.touched.email && signUpFormik?.errors.email) ||
+              (signUpFormik.touched.password &&
+                signUpFormik?.errors.password) ||
+              (signUpFormik.touched.confirmPassword &&
+                signUpFormik?.errors.confirmPassword) ||
+              (signUpFormik.touched.register &&
+                signUpFormik?.errors.register) ||
+              (signUpFormik.touched.place && signUpFormik?.errors.place) ||
+              (signUpFormik.touched.sector && signUpFormik?.errors.sector)
+            }
+          />
+
           {showSignUp ? (
             <>
               <div className='content'>
-                <Err
-                  error={
-                    (signUpFormik.touched.full_name &&
-                      signUpFormik?.errors.full_name) ||
-                    (signUpFormik.touched.email &&
-                      signUpFormik?.errors.email) ||
-                    (signUpFormik.touched.password &&
-                      signUpFormik?.errors.password) ||
-                    (signUpFormik.touched.confirmPassword &&
-                      signUpFormik?.errors.confirmPassword) ||
-                    (signUpFormik.touched.register &&
-                      signUpFormik?.errors.register)
-                  }
-                />
-
                 <Field
                   type='text'
                   name='full_name'
@@ -203,14 +206,34 @@ const Home = () => {
                 />
 
                 {isAdmin && (
-                  <Field
-                    type='text'
-                    name='register'
-                    placeholder='Registro'
-                    onBlur={signUpFormik.handleBlur}
-                    onChange={signUpFormik.handleChange}
-                    value={signUpFormik.values.register}
-                  />
+                  <>
+                    <Field
+                      type='text'
+                      name='register'
+                      placeholder='Registro'
+                      onBlur={signUpFormik.handleBlur}
+                      onChange={signUpFormik.handleChange}
+                      value={signUpFormik.values.register}
+                    />
+
+                    <Field
+                      type='text'
+                      name='place'
+                      placeholder='Local'
+                      onBlur={signUpFormik.handleBlur}
+                      value={signUpFormik.values.place}
+                      onChange={signUpFormik.handleChange}
+                    />
+
+                    <Field
+                      type='text'
+                      name='sector'
+                      placeholder='Setor'
+                      onBlur={signUpFormik.handleBlur}
+                      value={signUpFormik.values.sector}
+                      onChange={signUpFormik.handleChange}
+                    />
+                  </>
                 )}
               </div>
 
@@ -248,8 +271,8 @@ const Home = () => {
                 type='password'
                 name='password'
                 placeholder='Senha'
-                value={signInFormik.values.password}
                 onBlur={signInFormik.handleBlur}
+                value={signInFormik.values.password}
                 onChange={signInFormik.handleChange}
               />
 

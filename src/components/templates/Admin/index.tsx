@@ -7,9 +7,9 @@ import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { api } from '@app/services/api'
 
+import { IProduct } from '@app/types/api.types'
 import { TNextPageWithLayout } from '@app/types/next.types'
 
-import { IProduct } from '@app/alltypes'
 import Head from 'next/head'
 import { createContext, useEffect, useState } from 'react'
 
