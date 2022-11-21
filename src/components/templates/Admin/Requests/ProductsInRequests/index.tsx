@@ -15,9 +15,10 @@ import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { api } from '@app/services/api'
 
+import { IProduct } from '@app/types/api.types'
+
 import { formatDate } from '@app/utils/date/format'
 
-import { IProduct } from '@app/alltypes'
 import { useContext, useEffect, useState } from 'react'
 
 export interface IProductProps {

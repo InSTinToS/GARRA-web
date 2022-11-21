@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const nextConfig = {
   reactStrictMode: false,
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  images: { disableStaticImages: true }
+  images: { disableStaticImages: true },
+  typescript: { ignoreBuildErrors: true }
 }
 
 const withPWA = require('next-pwa')({
@@ -11,7 +10,6 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   sw: '/serviceWorker.js'
-  // disable: process.env.NODE_ENV !== 'production'
 })
 
 module.exports = withPWA(nextConfig)

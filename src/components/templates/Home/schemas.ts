@@ -1,5 +1,23 @@
 import * as Yup from 'yup'
 
+const place = {
+  min: { value: 2, error: 'Nome do local muito curto!' },
+  max: { value: 30, error: 'Nome do local muito longo!' },
+  matches: {
+    value: /^([A-z0-9])+$/,
+    error: 'Nome do local deve conter apenas letras ou números!'
+  }
+}
+
+const sector = {
+  min: { value: 2, error: 'Nome do setor muito curto!' },
+  max: { value: 30, error: 'Nome do setor muito longo!' },
+  matches: {
+    value: /^([A-z0-9])+$/,
+    error: 'Nome do setor deve conter apenas letras ou números!'
+  }
+}
+
 const register = {
   min: { value: 2, error: 'Registro muito curto!' },
   max: { value: 30, error: 'Registro muito longo!' },
@@ -94,5 +112,15 @@ export const signUpYupSchema = Yup.object().shape({
   register: Yup.string()
     .min(register.min.value, register.min.error)
     .max(register.max.value, register.max.error)
-    .matches(register.matches.value, register.matches.error)
+    .matches(register.matches.value, register.matches.error),
+
+  sector: Yup.string()
+    .min(sector.min.value, sector.min.error)
+    .max(sector.max.value, sector.max.error)
+    .matches(sector.matches.value, sector.matches.error),
+
+  place: Yup.string()
+    .min(place.min.value, place.min.error)
+    .max(place.max.value, place.max.error)
+    .matches(place.matches.value, place.matches.error)
 })

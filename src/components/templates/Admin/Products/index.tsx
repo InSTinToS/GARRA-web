@@ -8,10 +8,11 @@ import { useAppSelector } from '@app/hooks/useAppSelector'
 
 import { api } from '@app/services/api'
 
+import { IProduct } from '@app/types/api.types'
+
 import { formatDate } from '@app/utils/date/format'
 
 import { AdminContext } from '..'
-import { IProduct } from '@app/alltypes'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 
